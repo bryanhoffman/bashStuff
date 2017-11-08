@@ -1,0 +1,31 @@
+<?php
+require_once "Mail.php";
+
+$from = "bob@swag.com>";
+$to = "<8888675309@vtext.com>";
+$subject = "ESM REMINDER";
+$body = "Hi,\n\nPlease fill out the ESM survey.";
+
+$host = "ssl://smtp.gmail.com";
+$port = "465";
+$username = "notbob@lit.org";
+$password = "notmypasswordnotmyproblem";
+
+$headers = array ('From' => $from,
+  'To' => $to,
+  'Subject' => $subject);
+$smtp = Mail::factory('smtp',
+  array ('host' => $host,
+	'port' => $port,
+    'auth' => true,
+    'username' => $username,
+    'password' => $password));
+
+$mail = $smtp->send($to, $headers, $body);
+
+if (PEAR::isError($mail)) {
+  echo("<p>" . $mail->getMessage() . "</p>");
+ } else {
+  echo("<p>Message successfully sent!</p>");
+ }
+?>
